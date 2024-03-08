@@ -1,7 +1,8 @@
 li = []
 threshold = 60000
 weight = 0
-
+import sys
+sys.setrecursionlimit(2147483647)
 
 def print_All_K_Length(set__, length):
     for i in range(1, k+1):
