@@ -2,7 +2,7 @@ try:
     x = int(input("n1 >> "))
     y = int(input("n2 >> "))
 except:
-    print(f"Values of n1 and n2 are changed due to invalid request !")
+    print(f"Values of n1 and n2 are changed due to invalid input !")
     x = 100
     y = 100
 print(f"n1 = {x}\nn2 = {y}")
