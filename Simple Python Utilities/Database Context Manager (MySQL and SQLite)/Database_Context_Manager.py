@@ -20,21 +20,28 @@ class SQLite3DatabaseConnection:
             self.connection.close()
 
 
-class MySQLDatabaseConnection:
-    def __init__(self, host, username, password):
-        self.connection = None
-        self.host = host
+class MySQLDatabaseContextManager:
+    def __init__(self, host, username, password, database=None):
         self.username = username
         self.password = password
+        self.host = host
+        self.database = database
+        self.connection = None
 
     def __enter__(self):
-        self.connection = mysql.connector.connect(host=self.host, user=self.username, password=self.password)
+        vals = {'host': self.host, 'username': self.username, 'password': self.password}
+        if self.database:
+            vals.update({"database": self.database})
+        self.connection = mysql.connector.connect(**vals)
         return self.connection
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if exc_tb or exc_val or exc_type:
-            print(f"Error : \n        exc_type = {exc_type}\n        exc_val  = {exc_val}\n        exc_tb   = {exc_tb}")
+        if not (exc_tb or exc_val or exc_type):
+            try:
+                self.connection.commit()
+            except:
+                pass
+        try:
             self.connection.close()
-        else:
-            self.connection.commit()
-            self.connection.close()
+        except:
+            pass
