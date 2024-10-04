@@ -13,9 +13,8 @@ def euler_number(acc=0, pre=0):
     print(f"{l}{l}")
 
 
-l = "_______________________________________________________________________________________________________________"
 while True:
     try:
         euler_number(int(input("Accuracy : ")), int(input("Precision : ")))
     except Exception as i:
-        print(f"Error : {i} \n{l}{l}")
+        print(f"Error : {i} \n{'_'*50}")
